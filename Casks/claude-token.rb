@@ -1,12 +1,9 @@
 # Homebrew Cask template for claude-token.
 # CI (.github/workflows/release.yml) fills in the version and sha256 below,
 # then writes the result to ayuayuyu/homebrew-tap Casks/claude-token.rb.
-#
-# Manual install (unsigned app, so --no-quarantine is required):
-#   brew install --cask --no-quarantine ayuayuyu/tap/claude-token
 cask "claude-token" do
-  version "0.1.0"
-  sha256 "c28c8d1f728ce2919ece43ae0ae6b4e811f40f904ec48442b43338b2e8cd11ed"
+  version "0.1.1"
+  sha256 "1775c819099dd0a5ce9467c38bb34cfc5dc813951f10ea52a433d90985daade6"
 
   url "https://github.com/ayuayuyu/claude-token/releases/download/v#{version}/claude-token-#{version}-universal.dmg"
   name "Claude Token"
@@ -16,10 +13,18 @@ cask "claude-token" do
   app "claude-token.app"
 
   caveats <<~EOS
-    claude-token is not code-signed. Install with --no-quarantine:
-      brew install --cask --no-quarantine claude-token
-    Or, after a normal install, clear the quarantine flag once:
+    claude-token は個人開発のため Apple 公証を受けていません。
+    初回起動時に「開発元を確認できません」と表示された場合、以下のいずれかで対処してください:
+
+      # 方法 1: install 後に quarantine 属性を除去（推奨）
       xattr -dr com.apple.quarantine "/Applications/claude-token.app"
+
+      # 方法 2: 環境変数で install 時に quarantine を付けない
+      HOMEBREW_CASK_OPTS="--no-quarantine" brew install --cask ayuayuyu/tap/claude-token
+
+      # 方法 3: Finder で右クリック → 開く（初回のみ）
+
+    ソースは https://github.com/ayuayuyu/claude-token で公開しています。
   EOS
 
   zap trash: [
